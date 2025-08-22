@@ -12,7 +12,7 @@ function ExpenseList() {
   const fetchExpenses = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/expenses');
+      const response = await fetch('http://localhost:8081/api/expenses');
       const data = await response.json();
       setExpenses(data);
     } catch (error) {
@@ -24,7 +24,7 @@ function ExpenseList() {
 
   const updateStatus = async (id, status, remarks) => {
     try {
-      await fetch(`http://localhost:8080/api/expenses/${id}/status`, {
+      await fetch(`http://localhost:8081/api/expenses/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, remarks })
