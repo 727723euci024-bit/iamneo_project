@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+build/
+dist/
+target/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# Spring Boot
+*.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# React
+/reactapp/build
+/reactapp/.env.local
+/reactapp/.env.development.local
+/reactapp/.env.test.local
+/reactapp/.env.production.local
