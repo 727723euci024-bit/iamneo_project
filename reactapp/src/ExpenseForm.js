@@ -36,7 +36,7 @@ function ExpenseForm() {
     }
 
     try {
-      const response = await fetch('http://localhost:8081/api/expenses', {
+      const response = await fetch('http://localhost:8080/api/expenses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -51,8 +51,8 @@ function ExpenseForm() {
         setMessageType('success');
         setFormData({ employeeId: '', amount: '', description: '', date: '' });
       } else {
-        const error = await response.text();
-        setMessage(error);
+        const errorData = await response.json().catch(() => ({ message: 'An error occurred' }));
+        setMessage(errorData.message || 'An error occurred');
         setMessageType('error');
       }
     } catch (error) {

@@ -1,37 +1,65 @@
 # Dependencies
 node_modules/
-*/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Build outputs
+# Production builds
 build/
 dist/
-target/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # IDE files
 .vscode/
 .idea/
-*.iml
+*.swp
+*.swo
 
-# OS files
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Logs
-*.log
-npm-debug.log*
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-# Environment variables
-.env
-.env.local
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
 # Spring Boot
-*.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+spring-boot-starter-*/
 
-# React
-/reactapp/build
-/reactapp/.env.local
-/reactapp/.env.development.local
-/reactapp/.env.test.local
-/reactapp/.env.production.local
+# H2 Database
+*.db
+*.trace.db
+*.lock.db
+
+# Test results
+test-results.json
+coverage/

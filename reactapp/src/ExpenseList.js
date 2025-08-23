@@ -4,6 +4,8 @@ function ExpenseList() {
   const [expenses, setExpenses] = useState([]);
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [updating, setUpdating] = useState(null);
 
   useEffect(() => {
     fetchExpenses();
@@ -12,10 +14,16 @@ function ExpenseList() {
   const fetchExpenses = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8081/api/expenses');
-      const data = await response.json();
-      setExpenses(data);
+      setError('');
+      const response = await fetch('http://localhost:8080/api/expenses');
+      if (response.ok) {
+        const data = await response.json();
+        setExpenses(data);
+      } else {
+        setError('Failed to fetch expenses');
+      }
     } catch (error) {
+      setError('Error connecting to server');
       console.error('Error fetching expenses:', error);
     } finally {
       setLoading(false);
@@ -24,14 +32,23 @@ function ExpenseList() {
 
   const updateStatus = async (id, status, remarks) => {
     try {
-      await fetch(`http://localhost:8081/api/expenses/${id}/status`, {
+      setUpdating(id);
+      const response = await fetch(`http://localhost:8080/api/expenses/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, remarks })
       });
-      fetchExpenses();
+      if (response.ok) {
+        fetchExpenses();
+      } else {
+        const errorData = await response.json().catch(() => ({ message: 'Update failed' }));
+        alert(errorData.message || 'Failed to update expense status');
+      }
     } catch (error) {
+      alert('Error connecting to server');
       console.error('Error updating status:', error);
+    } finally {
+      setUpdating(null);
     }
   };
 
@@ -82,6 +99,21 @@ function ExpenseList() {
           <div className="empty-state">
             <h3>Loading expenses...</h3>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container">
+        <div className="card">
+          <div className="alert alert-danger">
+            {error}
+          </div>
+          <button className="btn btn-primary" onClick={fetchExpenses}>
+            Retry
+          </button>
         </div>
       </div>
     );
@@ -148,16 +180,18 @@ function ExpenseList() {
                           <button 
                             className="btn btn-success"
                             onClick={() => handleApprove(expense.id)}
+                            disabled={updating === expense.id}
                             title="Approve expense"
                           >
-                            Approve
+                            {updating === expense.id ? 'Updating...' : 'Approve'}
                           </button>
                           <button 
                             className="btn btn-danger"
                             onClick={() => handleReject(expense.id)}
+                            disabled={updating === expense.id}
                             title="Reject expense"
                           >
-                            Reject
+                            {updating === expense.id ? 'Updating...' : 'Reject'}
                           </button>
                         </div>
                       ) : (
