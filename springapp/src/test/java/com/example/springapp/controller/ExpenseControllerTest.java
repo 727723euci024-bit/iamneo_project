@@ -77,7 +77,7 @@ public class ExpenseControllerTest {
 
         mockMvc.perform(get("/api/expenses"))
                 .andExpect(status().isOk())
-                .andExpected(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[1].id").value(2));
     }
