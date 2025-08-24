@@ -62,7 +62,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.example.springapp.SpringappApplication</mainClass>
+					<mainClass>com.example.springapp.ExpenseReimbursementSystemApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
