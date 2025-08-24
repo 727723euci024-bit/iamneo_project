@@ -15,7 +15,7 @@ function ExpenseList() {
     try {
       setLoading(true);
       setError('');
-      const response = await fetch('/proxy/8080/api/expenses');
+      const response = await fetch('https://8080-aaeeacbfcbfccbcfaebbafecffcfdcbdddddd.premiumproject.examly.io/api/expenses');
       if (response.ok) {
         const data = await response.json();
         setExpenses(data);
@@ -33,7 +33,7 @@ function ExpenseList() {
   const updateStatus = async (id, status, remarks) => {
     try {
       setUpdating(id);
-      const response = await fetch(`/proxy/8080/api/expenses/${id}/status`, {
+      const response = await fetch(`https://8080-aaeeacbfcbfccbcfaebbafecffcfdcbdddddd.premiumproject.examly.io/api/expenses/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, remarks })
