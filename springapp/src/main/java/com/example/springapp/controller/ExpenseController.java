@@ -1,7 +1,7 @@
 package com.example.springapp.controller;
 
 import com.example.springapp.model.Expense;
-import com.example.springapp.repository.ExpenseRepository;
+import com.example.springapp.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ExpenseController {
     
     @Autowired
-    private ExpenseRepository expenseRepository;
+    private ExpenseService expenseService;
 
     @PostMapping("/expenses")
     public ResponseEntity<?> createExpense(@RequestBody Expense expense) {
@@ -40,19 +40,19 @@ public class ExpenseController {
         }
 
         expense.setStatus("PENDING");
-        Expense savedExpense = expenseRepository.save(expense);
+        Expense savedExpense = expenseService.saveExpense(expense);
         return ResponseEntity.status(201).body(savedExpense);
     }
 
     @GetMapping("/expenses")
     public ResponseEntity<List<Expense>> getAllExpenses() {
-        List<Expense> expenses = expenseRepository.findAll();
+        List<Expense> expenses = expenseService.getAllExpenses();
         return ResponseEntity.ok(expenses);
     }
 
     @PutMapping("/expenses/{id}/status")
     public ResponseEntity<?> updateExpenseStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
-        Optional<Expense> expenseOpt = expenseRepository.findById(id);
+        Optional<Expense> expenseOpt = expenseService.getExpenseById(id);
         
         if (!expenseOpt.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -74,7 +74,7 @@ public class ExpenseController {
         expense.setStatus(status);
         expense.setRemarks(remarks);
         
-        Expense updatedExpense = expenseRepository.save(expense);
+        Expense updatedExpense = expenseService.updateExpense(expense);
         return ResponseEntity.ok(updatedExpense);
     }
 }
