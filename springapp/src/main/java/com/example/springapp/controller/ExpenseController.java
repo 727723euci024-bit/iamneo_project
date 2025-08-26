@@ -21,7 +21,6 @@ public class ExpenseController {
 
     @PostMapping("/expenses")
     public ResponseEntity<?> createExpense(@RequestBody Expense expense) {
-        // Validation
         if (expense.getAmount() == null || expense.getAmount() <= 0) {
             return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "message", "Amount must be greater than 0"));
         }
@@ -57,7 +56,7 @@ public class ExpenseController {
     public ResponseEntity<?> updateExpenseStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         Optional<Expense> expenseOpt = expenseService.getExpenseById(id);
         
-        if (!expenseOpt.isPresent()) {
+        if (expenseOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -65,7 +64,6 @@ public class ExpenseController {
         String status = request.get("status");
         String remarks = request.get("remarks");
 
-        // Validation
         if (!"APPROVED".equals(status) && !"REJECTED".equals(status)) {
             return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "message", "Status must be either APPROVED or REJECTED"));
         }
