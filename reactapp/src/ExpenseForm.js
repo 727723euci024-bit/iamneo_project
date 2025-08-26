@@ -36,7 +36,7 @@ function ExpenseForm() {
     }
 
     try {
-      const response = await fetch('https://8080-aaeeacbfcbfccbcfaebbafecffcfdcbdddddd.premiumproject.examly.io/api/expenses', {
+      const response = await fetch('http://localhost:8080/api/expenses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

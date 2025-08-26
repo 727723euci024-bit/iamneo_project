@@ -26,8 +26,11 @@ public class ExpenseController {
             return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "message", "Amount must be greater than 0"));
         }
         
-        if (expense.getDescription() == null || expense.getDescription().trim().isEmpty() || 
-            expense.getDescription().length() < 5 || expense.getDescription().length() > 200) {
+        if (expense.getDescription() == null || expense.getDescription().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "message", "Description is required"));
+        }
+        
+        if (expense.getDescription().length() < 5 || expense.getDescription().length() > 200) {
             return ResponseEntity.badRequest().body(Map.of("error", "Validation failed", "message", "Description must be between 5-200 characters"));
         }
         
